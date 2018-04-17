@@ -2,10 +2,13 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><%= percentBlocked %>% Интернета заблокировано</title>
+    <title><%= percentBlocked %> Интернета заблокировано</title>
     <meta name="description" content="Счетчик блокировки Интернета Роскомнадзором" />
     <meta property="og:title" content="Счетчик блокировки Интернета" />
     <meta property="og:description" content="Счетчик блокировки Интернета Роскомнадзором" />
+    <meta property="og:url" content="http://molitovka-live.no-ip.org:3000/" />
+    <meta property="og:image" content="pic300.png" />
+    <link rel="shortcut icon" href="pic128.png" type="image/png" />
     <style>
         body {
             width: 100%;
@@ -30,18 +33,54 @@
             font-size: 50px;
             color: #aaaaaa;
         }
+
+        .text-small {
+            font-size: 16px;
+            color: #aaaaaa;
+        }
+
+        .info-block {
+            margin-top: 42px;
+        }
     </style>
 </head>
 <body>
     <main>
         <div class="number">
-            <%= percentBlocked %>%
+            <span class="js-percent"><%= percentBlocked %></span>
         </div>
         <div class="text">
             Интернета заблокировано
             <br />
             Роскомнадзором
         </div>
+        <div class="text-small info-block">
+            Это <span class="js-num"><%= numBlocked %></span> из <span class="js-total"><%= totalAddresses %></span> IP-адресов
+        </div>
     </main>
+
+    <script type="application/javascript">
+        window.addEventListener('DOMContentLoaded', () => {
+          const elPercent = document.getElementsByClassName('js-percent')[0];
+          const elNum = document.getElementsByClassName('js-num')[0];
+          const elTotal = document.getElementsByClassName('js-total')[0];
+
+          const update = () => {
+            if (typeof window.fetch !== 'function') return;
+
+            fetch('/api/data')
+              .then(res => res.json())
+              .then(data => {
+                elPercent.innerText = data.percentBlocked;
+                elNum.innerText = data.numBlocked;
+                elTotal.innerText = data.totalAddresses;
+
+                setTimeout(update, 30000);
+              });
+          }
+
+          setTimeout(update, 30000);
+        });
+    </script>
 </body>
 </html>

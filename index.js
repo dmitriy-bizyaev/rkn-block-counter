@@ -3,10 +3,13 @@
  */
 
 const fs = require('fs');
+const path = require('path');
 const argv = require('argv');
 const request = require('request-promise-native');
 const express = require('express');
+const serveStatic = require('serve-static');
 const ejs = require('ejs');
+const formatNumber = require('format-number');
 
 const url = 'https://2018.schors.spb.ru/d1_ipblock.json';
 const totalAddresses = 3702258432;
@@ -15,7 +18,7 @@ const templateString = fs.readFileSync('index.ejs', { encoding : 'utf8' } );
 const template = ejs.compile(templateString);
 
 const pollInterval = 5 * 60 * 1000; // 5 min
-const beforeRetry = 10 * 1000; // 10 sec
+const beforeRetry = 15 * 1000; // 15 sec
 let numBlocked = 0;
 
 const getBlockedIpsNum = async () => {
@@ -47,13 +50,28 @@ const poll = async () => {
 
 const app = express();
 
+const formatPercent = formatNumber({ suffix: '%', decimal: ',', round: 4 });
+const formatNum = formatNumber({ integerSeparator: '.' });
+
 app.get('/', async (req, res) => {
   const html = template({
-    percentBlocked: Math.round(calcPercent(numBlocked) * 10000) / 10000
+    numBlocked: formatNum(numBlocked),
+    totalAddresses: formatNum(totalAddresses),
+    percentBlocked: formatPercent(calcPercent(numBlocked)),
   });
 
   res.header('Content-Type', 'text/html').end(html);
 });
+
+app.get('/api/data', async (req, res) => {
+  res.header('Content-Type', 'application/json').end(JSON.stringify({
+    numBlocked: formatNum(numBlocked),
+    totalAddresses: formatNum(totalAddresses),
+    percentBlocked: formatPercent(calcPercent(numBlocked)),
+  }));
+});
+
+app.use(serveStatic(path.join(__dirname, 'assets')));
 
 const options = argv.option({
   name: 'port',
