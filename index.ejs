@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title><%= percentBlocked %>% Интернета заблокировано</title>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        main {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            text-align: center;
+        }
+
+        .number {
+            font-size: 150px;
+            color: #444444;
+        }
+
+        .text {
+            font-size: 50px;
+            color: #aaaaaa;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="number">
+            <%= percentBlocked %>%
+        </div>
+        <div class="text">
+            Интернета заблокировано
+            <br />
+            Роскомнадзором
+        </div>
+    </main>
+</body>
+</html>
