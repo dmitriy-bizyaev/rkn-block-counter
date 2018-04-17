@@ -2,12 +2,12 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><%= percentBlocked %> Интернета заблокировано</title>
+    <title><%= percentBlocked %>% Интернета заблокировано</title>
     <meta name="description" content="Счетчик блокировки Интернета Роскомнадзором" />
     <meta property="og:title" content="Счетчик блокировки Интернета" />
     <meta property="og:description" content="Счетчик блокировки Интернета Роскомнадзором" />
     <meta property="og:url" content="http://molitovka-live.no-ip.org:3000/" />
-    <meta property="og:image" content="pic300.png" />
+    <meta property="og:image" content="http://molitovka-live.no-ip.org:3000/pic300.png" />
     <link rel="shortcut icon" href="pic128.png" type="image/png" />
     <style>
         body {
@@ -47,7 +47,7 @@
 <body>
     <main>
         <div class="number">
-            <span class="js-percent"><%= percentBlocked %></span>
+            <span class="js-percent"><%= percentBlocked %>%</span>
         </div>
         <div class="text">
             Интернета заблокировано
@@ -72,8 +72,8 @@
             fetch('/api/data')
               .then(res => res.json())
               .then(data => {
-                document.title = `${data.percentBlocked} Интернета заблокировано`;
-                elPercent.innerText = data.percentBlocked;
+                document.title = `${data.percentBlocked}% Интернета заблокировано`;
+                elPercent.innerText = `${data.percentBlocked}%`;
                 elNum.innerText = data.numBlocked;
                 elTotal.innerText = data.totalAddresses;
 

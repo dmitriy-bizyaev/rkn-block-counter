@@ -50,25 +50,25 @@ const poll = async () => {
 
 const app = express();
 
-const formatPercent = formatNumber({ suffix: '%', decimal: ',', round: 4 });
+const formatPercent = formatNumber({ decimal: ',', round: 4 });
 const formatNum = formatNumber({ integerSeparator: '.' });
 
-app.get('/', async (req, res) => {
-  const html = template({
-    numBlocked: formatNum(numBlocked),
-    totalAddresses: formatNum(totalAddresses),
-    percentBlocked: formatPercent(calcPercent(numBlocked)),
-  });
+const formatData = () => ({
+  numBlocked: formatNum(numBlocked),
+  totalAddresses: formatNum(totalAddresses),
+  percentBlocked:
+    formatPercent(calcPercent(numBlocked)).replace(/0+$/, '') || '0',
+});
 
+app.get('/', async (req, res) => {
+  const data = formatData();
+  const html = template(data);
   res.header('Content-Type', 'text/html').end(html);
 });
 
 app.get('/api/data', async (req, res) => {
-  res.header('Content-Type', 'application/json').end(JSON.stringify({
-    numBlocked: formatNum(numBlocked),
-    totalAddresses: formatNum(totalAddresses),
-    percentBlocked: formatPercent(calcPercent(numBlocked)),
-  }));
+  const data = formatData();
+  res.header('Content-Type', 'application/json').end(JSON.stringify(data));
 });
 
 app.use(serveStatic(path.join(__dirname, 'assets')));
