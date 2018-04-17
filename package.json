@@ -1,5 +1,5 @@
 {
-  "name": "rkn-block-meter",
+  "name": "rkn-block-counter",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,9 @@
   },
   "author": "Dmitriy Bizyaev",
   "license": "MIT",
+  "engines" : {
+    "node" : ">=8.0.0"
+  },
   "dependencies": {
     "ejs": "^2.5.8",
     "express": "^4.16.3",
