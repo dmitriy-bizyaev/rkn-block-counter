@@ -12,6 +12,10 @@
   "engines": {
     "node": ">=8.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dmitriy-bizyaev/rkn-block-counter"
+  },
   "dependencies": {
     "argv": "0.0.2",
     "ejs": "^2.5.8",
