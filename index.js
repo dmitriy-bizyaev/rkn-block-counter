@@ -3,6 +3,7 @@
  */
 
 const fs = require('fs');
+const argv = require('argv');
 const request = require('request-promise-native');
 const express = require('express');
 const ejs = require('ejs');
@@ -52,4 +53,10 @@ app.get('/', async (req, res) => {
   res.header('Content-Type', 'text/html').end(html);
 });
 
-app.listen(3000);
+const options = argv.option({
+  name: 'port',
+  short: 'p',
+  type: 'int',
+}).run().options;
+
+app.listen(options.port || 3000);
