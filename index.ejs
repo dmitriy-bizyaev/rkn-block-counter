@@ -71,6 +71,7 @@
             fetch('/api/data')
               .then(res => res.json())
               .then(data => {
+                document.title = `${data.percentBlocked} Интернета заблокировано`;
                 elPercent.innerText = data.percentBlocked;
                 elNum.innerText = data.numBlocked;
                 elTotal.innerText = data.totalAddresses;
