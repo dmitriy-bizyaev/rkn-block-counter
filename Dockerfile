@@ -13,4 +13,4 @@ RUN apk add -U nodejs \
     && rm -rf /root/..?* /root/.[!.]* /root/*
 
 EXPOSE 3000
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "docker-entrypoint.sh"]
