@@ -64,6 +64,7 @@
           const elPercent = document.getElementsByClassName('js-percent')[0];
           const elNum = document.getElementsByClassName('js-num')[0];
           const elTotal = document.getElementsByClassName('js-total')[0];
+          const updateInterval = 30 * 1000;
 
           const update = () => {
             if (typeof window.fetch !== 'function') return;
@@ -76,11 +77,14 @@
                 elNum.innerText = data.numBlocked;
                 elTotal.innerText = data.totalAddresses;
 
-                setTimeout(update, 30000);
-              });
+                setTimeout(update, updateInterval);
+              })
+              .catch(() => {
+                setTimeout(update, updateInterval);
+              })
           }
 
-          setTimeout(update, 30000);
+          setTimeout(update, updateInterval);
         });
     </script>
 </body>
