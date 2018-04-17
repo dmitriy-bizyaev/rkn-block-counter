@@ -15,6 +15,7 @@ const templateString = fs.readFileSync('index.ejs', { encoding : 'utf8' } );
 const template = ejs.compile(templateString);
 
 const pollInterval = 5 * 60 * 1000; // 5 min
+const beforeRetry = 10 * 1000; // 10 sec
 let numBlocked = 0;
 
 const getBlockedIpsNum = async () => {
@@ -36,6 +37,7 @@ const poll = async () => {
         break;
       } catch (err) {
         console.log('Failed to get data');
+        await wait(beforeRetry);
       }
     }
 
