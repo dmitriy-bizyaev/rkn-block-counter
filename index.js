@@ -11,7 +11,7 @@ const serveStatic = require('serve-static');
 const ejs = require('ejs');
 const formatNumber = require('format-number');
 
-const url = 'https://2018.schors.spb.ru/d1_ipblock.json';
+const url = 'https://usher2.club/d1_ipblock.json';
 const totalAddresses = 3702258432;
 
 const templateString = fs.readFileSync('index.ejs', { encoding : 'utf8' } );
