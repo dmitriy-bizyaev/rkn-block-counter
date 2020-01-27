@@ -80,4 +80,4 @@ const options = argv.option({
 }).run().options;
 
 poll();
-app.listen(options.port || 3000);
+app.listen(options.port || 80);
